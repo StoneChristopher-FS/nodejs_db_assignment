@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const makesRouter = require("../api/routes/makes");
+const modelsRouter = require("../api/routes/models")
 
 // middleware for logging
 app.use(morgan("dev"));
@@ -36,6 +37,7 @@ app.get("/", (req, res, next) => {
 })
 
 app.use("/makes", makesRouter);
+app.use("/models", modelsRouter);
 
 // middleware for error handling
 app.use((req, res, next) => {
