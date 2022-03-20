@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const mongoose = require("mongoose");
 const makesRouter = require("../api/routes/makes");
 
 // middleware for logging
@@ -51,6 +52,16 @@ app.use((error, req, res, next) => {
             method: req.method
         }
     });
+});
+
+// connect to mongodb
+mongoose.connect(process.env.mongoDB, (err) => {
+    if(err) {
+        console.error("Error ", err.message);
+    }
+    else {
+        console.log("MongoDB connection successful");
+    };
 });
 
 module.exports = app;
