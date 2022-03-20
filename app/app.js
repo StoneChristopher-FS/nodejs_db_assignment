@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const makesRouter = require("../api/routes/makes");
 
 // middleware for logging
 app.use(morgan("dev"));
@@ -32,6 +33,8 @@ app.get("/", (req, res, next) => {
         method: req.method
     })
 })
+
+app.use("/makes", makesRouter);
 
 // middleware for error handling
 app.use((req, res, next) => {
