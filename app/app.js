@@ -25,6 +25,14 @@ app.use((req, res, next) => {
     next();
 })
 
+// GET method to verify server is running
+app.get("/", (req, res, next) => {
+    res.status(201).json({
+        message: "Service is up!",
+        method: req.method
+    })
+})
+
 // middleware for error handling
 app.use((req, res, next) => {
     const error = new Error("NOT FOUND!!!");
