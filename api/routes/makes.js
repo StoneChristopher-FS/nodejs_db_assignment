@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Make = require("../models/make");
+const Messages = require("../../messages/messsages");
+
 
 router.get("/", (req, res, next) => {
     Make.find({})
@@ -38,7 +40,7 @@ router.get("/:makesId", (req, res, next) => {
       if(!make){
         console.log(make);
         return res.status(404).json({
-          message: "Make Not Found"
+          message: Messages.make_not_found
         });
       };
 
@@ -69,7 +71,7 @@ router.post("/", (req, res, next) => {
         console.log(result);
         if(result.length > 0) {
             return res.status(406).json({
-                message: "Make is already added!"
+                message: Messages.make_dupicate
             })
         };
 
@@ -84,7 +86,7 @@ router.post("/", (req, res, next) => {
             .then(result => {
                 console.log(result);
                 res.status(200).json({
-                    message: "Make Saved",
+                    message: Messages.make_saved,
                     make: {
                         make: result.make,
                         id: result._id,
@@ -124,18 +126,19 @@ router.patch("/:makesId", (req, res, next) => {
       if(!make){
         console.log(make);
         return res.status(404).json({
-          message: "Make Not Found"
+          message: Messages.make_not_found
         });
       };
 
       const updatedMake = {
-        make: req.body.make
+        make: req.body.make,
+        model: req.body.model
       };
 
       Make.updateOne({_id:makesId}, {$set: updatedMake})
         .then(result => {
             res.status(200).json({
-                message: "Updated Make",
+                message: Messages.make_update,
                 result,
                 metadata: {
                     method: req.method,
@@ -172,14 +175,14 @@ router.delete("/:makesId", (req, res, next) => {
       if(!make){
         console.log(make);
         return res.status(404).json({
-          message: "Make Not Found"
+          message: Messages.make_not_found
         })
       }
 
       Make.deleteOne({_id:makesId})
         .then(result => {
             res.status(200).json({
-                message: "Make Deleted",
+                message: Messages.make_remove,
                 result,
                 request: {
                     method: "GET",
