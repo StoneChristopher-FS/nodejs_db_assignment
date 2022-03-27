@@ -90,10 +90,10 @@ router.post("/", (req, res, next) => {
                     make: {
                         make: result.make,
                         id: result._id,
-                        metadata: {
-                            method: req.method,
-                            host: req.hostname
-                        }
+                    },
+                    metadata: {
+                      method: req.method,
+                      host: req.hostname
                     }
                 });
             })
